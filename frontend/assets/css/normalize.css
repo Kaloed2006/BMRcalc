@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'mR';
+    src: url(../font/Montserrat-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'mR';
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    background-color: var(--primary-color)!important;
+}

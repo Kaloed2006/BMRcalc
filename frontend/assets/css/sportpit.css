@@ -1,0 +1,57 @@
+@import url(./normalize.css);
+@import url(./container.css);
+@import url(./variables.css);
+@import url(./scrollbar.css);
+@import url(./Header/header.css);
+
+.wrapper {
+    display: grid;
+    gap: 40px;
+    justify-content: center;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.card {
+    padding: 20px;
+    border-radius: 15px;
+    background-color: var(--white);
+}
+
+.card__img {
+    width: 400px;
+    border-radius: 15px;
+}
+
+.card__title,
+.card__text {
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 1440px) {
+    .wrapper {
+        grid-template-columns: repeat(2, 440px);
+    }
+}
+
+@media screen and (max-width: 1280px) {}
+
+@media screen and (max-width: 1024px) {
+    .wrapper {
+        grid-template-columns: repeat(1, 440px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .wrapper {
+        grid-template-columns: repeat(1, 425px);
+    }
+    .card__img {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .wrapper {
+        grid-template-columns: repeat(1, 100%);
+    }
+}

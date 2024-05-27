@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='stylesheet' href='../assets/css/progress.css' />
+    <title>Прогресс</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header__content container">
+            <a class="header__logo" href="index.html"><strong>BMRcalc</strong></a>
+            <!-- Бургер -->
+            <div class="burger-menu">
+                <input class="burger-menu__toggle" id="menu-toggle" type="checkbox" />
+                <label class="burger-menu__btn" for="menu-toggle">
+                    <span></span>
+                </label>
+                <ul class="burger-menu__box">
+                    <li class="burger-menu__item">
+                        <a class="nav__link" href="index.html">БЖУ Калькулятор</a>
+                    </li>
+                    <li class="burger-menu__item">
+                        <a class="nav__link" href="products.html">Продукты</a>
+                    </li>
+                    <li class="burger-menu__item">
+                        <a class="nav__link" href="sportpit.html">Спортпит</a>
+                    </li>
+                    <li class="burger-menu__item">
+                        <a class="nav__link" href="progress.html">Прогресс</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Бургер -->
+            <nav class="nav">
+                <a class="nav__link" href="index.html">БЖУ Калькулятор</a>
+                <a class="nav__link" href="products.html">Продукты</a>
+                <a class="nav__link" href="sportpit.html">Спортпит</a>
+                <a class="nav__link" href="progress.html">Прогресс</a>
+            </nav>
+        </div>
+    </header>
+    <main class='wrapper container'>
+        <section class="block">
+            <h1 class="title">Запишите свои старые данные</h1>
+
+            <!-- ===== ВЫБОР ГЕНДЕРА ===== -->
+            <div class='btns__container'>
+                <button type='button' id='startMaleBtn' class='btn male active'>Мужчина</button>
+                <button type='button' id='startFemaleBtn' class='btn female'>Женщина</button>
+            </div>
+            <!-- ===== ВЫБОР ГЕНДЕРА ===== -->
+
+            <!-- ===== ВЕС ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Вес(кг)</h5>
+                    <input type='number' min='20' max='160' value='80' class='range_value' id='startWeight'>
+                </div>
+                <input type='range' min='20' max='160' value='80' class='range_slider' id='startWeightSlider'>
+            </div>
+            <!-- ===== ВЕС ===== -->
+
+            <!-- ===== РОСТ ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Рост(см)</h5>
+                    <input type='number' min='50' max='250' value='180' class='range_value' id='startHeight'>
+                </div>
+                <input type='range' min='50' max='250' value='180' class='range_slider' id='startHeightSlider'>
+            </div>
+            <!-- ===== РОСТ ===== -->
+
+            <!-- ===== ВОЗРАСТ ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Возраст(лет)</h5>
+                    <input type='number' min='1' max='99' value='20' class='range_value' id='startAge'>
+                </div>
+                <input type='range' min='1' max='99' value='20' class='range_slider' id='startAgeSlider'>
+            </div>
+            <!-- ===== ВОЗРАСТ ===== -->
+
+            <!-- ===== ОБРАЗ ЖИЗНИ ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Образ жизни</h5>
+                </div>
+                <select class='dropdown' id='activity'>
+                    <option value='1.2'>Cидячий</option>
+                    <option value='1.375'>Небольшая активность </option>
+                    <option value='1.55'>Активность выше среднего </option>
+                    <option value='1.8'>Высокая активность</option>
+                </select>
+            </div>
+            <!-- ===== ОБРАЗ ЖИЗНИ ===== -->
+
+            <!-- ===== ЖИРОВАЯ МАССА ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Жировая масса(%)</h5>
+                    <input type='number' min='5' max='45' value='20' class='range_value' id='startFatPercentage'>
+                </div>
+                <input type='range' min='5' max='45' value='20' class='range_slider' id='startFatPercentageSlider'>
+            </div>
+            <!-- ===== ЖИРОВАЯ МАССА ===== -->
+
+            <!-- ===== ЦЕЛЬ ===== -->
+            <div class='btns__container' id='goalButtons'>
+                <button type='button' id='loseWeightBtn' class='btn active'>Сбросить вес</button>
+                <button type='button' id='gainWeightBtn' class='btn'>Набрать вес</button>
+                <button type='button' id='maintainWeightBtn' class='btn'>Удержать вес</button>
+            </div>
+            <!-- ===== ЦЕЛЬ ===== -->
+
+            <!-- ===== ТАЛИЯ ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Талия</h5>
+                    <input type='number' min='40' max='120' value='75' class='range_value' id='startWaist'>
+                </div>
+                <input type='range' min='40' max='120' value='75' class='range_slider' id='startWaistSlider'>
+            </div>
+            <!-- ===== ТАЛИЯ ===== -->
+
+            <!-- ===== БЕДРА ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Бедра</h5>
+                    <input type='number' min='40' max='140' value='85' class='range_value' id='startHip'>
+                </div>
+                <input type='range' min='40' max='140' value='85' class='range_slider' id='startHipSlider'>
+            </div>
+            <!-- ===== БЕДРА ===== -->
+        </section>
+        <section class="block">
+            <h1 class="title">Запишите свои новые данные</h1>
+
+            <!-- ===== ВЫБОР ГЕНДЕРА ===== -->
+            <div class='btns__container'>
+                <button type='button' id='endMaleBtn2' class='btn male active'>Мужчина</button>
+                <button type='button' id='endFemaleBtn2' class='btn female'>Женщина</button>
+            </div>
+            <!-- ===== ВЫБОР ГЕНДЕРА ===== -->
+
+            <!-- ===== ВЕС ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Вес(кг)</h5>
+                    <input type='number' min='20' max='160' value='80' class='range_value' id='endWeight2'>
+                </div>
+                <input type='range' min='20' max='160' value='80' class='range_slider' id='endWeightSlider2'>
+            </div>
+            <!-- ===== ВЕС ===== -->
+
+            <!-- ===== РОСТ ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Рост(см)</h5>
+                    <input type='number' min='50' max='250' value='180' class='range_value' id='endHeight2'>
+                </div>
+                <input type='range' min='50' max='250' value='180' class='range_slider' id='endHeightSlider2'>
+            </div>
+            <!-- ===== РОСТ ===== -->
+
+            <!-- ===== ВОЗРАСТ ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Возраст(лет)</h5>
+                    <input type='number' min='1' max='99' value='20' class='range_value' id='endAge2'>
+                </div>
+                <input type='range' min='1' max='99' value='20' class='range_slider' id='endAgeSlider2'>
+            </div>
+            <!-- ===== ВОЗРАСТ ===== -->
+
+            <!-- ===== ОБРАЗ ЖИЗНИ ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Образ жизни</h5>
+                </div>
+                <select class='dropdown' id='activity2'>
+                    <option value='1.2'>Cидячий</option>
+                    <option value='1.375'>Небольшая активность</option>
+                    <option value='1.55'>Активность выше среднего</option>
+                    <option value='1.8'>Высокая активность</option>
+                </select>
+            </div>
+            <!-- ===== ОБРАЗ ЖИЗНИ ===== -->
+
+            <!-- ===== ЖИРОВАЯ МАССА ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Жировая масса(%)</h5>
+                    <input type='number' min='5' max='45' value='20' class='range_value' id='endFatPercentage2'>
+                </div>
+                <input type='range' min='5' max='45' value='20' class='range_slider' id='endFatPercentageSlider2'>
+            </div>
+            <!-- ===== ЖИРОВАЯ МАССА ===== -->
+
+            <!-- ===== ЦЕЛЬ ===== -->
+            <div class='btns__container' id='goalButtons2'>
+                <button type='button' id='loseWeightBtn2' class='btn active'>Сбросить вес</button>
+                <button type='button' id='gainWeightBtn2' class='btn'>Набрать вес</button>
+                <button type='button' id='maintainWeightBtn2' class='btn'>Удержать вес</button>
+            </div>
+            <!-- ===== ЦЕЛЬ ===== -->
+
+            <!-- ===== ТАЛИЯ ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Талия</h5>
+                    <input type='number' min='40' max='120' value='75' class='range_value' id='endWaist2'>
+                </div>
+                <input type='range' min='40' max='120' value='75' class='range_slider' id='endWaistSlider2'>
+            </div>
+            <!-- ===== ТАЛИЯ ===== -->
+
+            <!-- ===== БЕДРА ===== -->
+            <div class='range__container'>
+                <div class='info__container'>
+                    <h5>Бедра</h5>
+                    <input type='number' min='40' max='140' value='85' class='range_value' id='endHip2'>
+                </div>
+                <input type='range' min='40' max='140' value='85' class='range_slider' id='endHipSlider2'>
+            </div>
+            <!-- ===== БЕДРА ===== -->
+        </section>
+        <section class="block">
+            <h1 class="title">Результаты</h1>
+
+
+            <div class="result_block">
+                <div class="result_block__name">
+                    <h5>Базальный обмен веществ</h5>
+                    <div class="hoverable">
+                        <p>Расшифровка</p>
+                        <span class="hidden-text">
+                            Базальный обмен веществ (БОВ) - минимальное количество энергии, необходимое организму в
+                            покое
+                            для поддержания жизненных функций. Он составляет примерно 60–75% от общего энергопотребления
+                            организма и зависит от таких факторов, как пол, возраст, вес и состав тела. Расшифровка БОВ
+                            важна для определения дневной калорийности и планирования диеты или физической активности.
+                        </span>
+                    </div>
+                </div>
+                <div class="result_block__info">
+                    <h3>Ваш старый результат:</h3>
+                    <h2><span id="targetCalories"></span> ккал</h2>
+                    <h3>= <span id="kilojoules"></span> кДж</h3>
+                </div>
+                <div class="result_block__info">
+                    <h3>Ваш новый результат:</h3>
+                    <h2><span id="targetCalories2"></span> ккал</h2>
+                    <h3>= <span id="kilojoules2"></span> кДж</h3>
+                </div>
+            </div>
+
+            <div class="result_block">
+                <div class="result_block__name">
+                    <h5>BMI индекс</h5>
+                    <div class="hoverable">
+                        <p>Расшифровка</p>
+                        <span class="hidden-text">
+                            BMI (Body Mass Index) - это показатель, который оценивает соотношение между вашим весом и
+                            ростом. Он используется для определения категории веса: недостаточный вес, нормальный вес,
+                            избыточный вес или ожирение. BMI рассчитывается путем деления вашего веса в килограммах на
+                            квадрат вашего роста в метрах. Этот показатель не учитывает распределение жировой ткани в
+                            организме или другие факторы, такие как мышечная масса, но является широко используемым
+                            инструментом для первичной оценки здоровья.
+                        </span>
+                    </div>
+                </div>
+                <div id="BMIresult">
+                </div>
+                <div class="chart-container">
+                    <canvas id="graph-2" class="graph"></canvas>
+                </div>
+            </div>
+
+            <div class="result_block">
+                <div class="result_block__name">
+                    <h5>WHR индекс</h5>
+                    <div class="hoverable">
+                        <p>Расшифровка</p>
+                        <span class="hidden-text">
+                            Индекс WHR (отношение окружности талии к окружности бедер) является мерой распределения жира
+                            в организме и используется для оценки риска развития различных заболеваний, таких как
+                            сердечно-сосудистые заболевания и диабет. Повышенное значение этого индекса свидетельствует
+                            о центральном ожирении,
+                            которое может быть связано с увеличенным риском развития сердечно-сосудистых заболеваний и
+                            других заболеваний.
+                        </span>
+                    </div>
+                </div>
+                <div id="WHRresult">
+                </div>
+                <div class="chart-container">
+                    <canvas id="graph-whr"></canvas>
+                </div>
+            </div>
+
+            <div class="result_block">
+                <div class="result_block__name">
+                    <h5>Водный баланс</h5>
+                    <div class="hoverable">
+                        <p>Расшифровка</p>
+                        <span class="hidden-text">
+                            Водный баланс организма представляет собой важный аспект его физиологии, который
+                            обеспечивает поддержание оптимального уровня воды внутри и вне клеток. Он контролируется
+                            сложной системой регуляции, которая включает в себя несколько органов и систем организма.
+                        </span>
+                    </div>
+                </div>
+                <div id="waterIntake">
+                    <span id="oldResult"></span>
+                    <span id="newResult"></span>
+                </div>
+                <div class="chart-container">
+                    <canvas id="waterIntakeChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="../assets/js/progress.js"></script>
+</body>
+</html>

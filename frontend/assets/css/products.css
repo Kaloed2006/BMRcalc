@@ -1,0 +1,66 @@
+@import url(./normalize.css);
+@import url(./container.css);
+@import url(./variables.css);
+@import url(./scrollbar.css);
+@import url(./Header/header.css);
+
+.wrapper {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.card {
+    padding: 20px;
+    border-radius: 15px;
+    background-color: var(--white);
+}
+
+.card__img {
+    width: 280px;
+    border-radius: 15px;
+}
+
+.card__title,
+.card__text {
+    margin-top: 10px;
+}
+
+.calories {
+    color: green;
+}
+
+.proteins {
+    color: grey;
+}
+
+.fats {
+    color: #cc5500;
+}
+
+.carbs {
+    color: red;
+}
+
+@media screen and (max-width: 1440px) {
+    .wrapper {
+        justify-content: center;
+        grid-template-columns: repeat(3, 320px);
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .wrapper {
+        grid-template-columns: repeat(2, 320px);
+    }
+}
+
+@media screen and (max-width: 1024px) {}
+
+@media screen and (max-width: 768px) {
+    .wrapper {
+        grid-template-columns: repeat(1, 320px);
+    }
+}
+
+@media screen and (max-width: 425px) {}
