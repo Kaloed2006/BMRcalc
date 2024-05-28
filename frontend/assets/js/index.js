@@ -59,21 +59,7 @@ function calculate() {
     }
 
     sessionStorage.setItem('targetCalories', targetCalories);
-
-    const macros = calculateMacros(targetCalories);
-    sessionStorage.setItem('protein', macros.protein);
-    sessionStorage.setItem('fat', macros.fat);
-    sessionStorage.setItem('carb', macros.carb);
-
     updateResults();
-}
-
-function calculateMacros(targetCalories) {
-    const protein = (targetCalories * 0.25) / 4;
-    const fat = (targetCalories * 0.25) / 9;
-    const carb = (targetCalories * 0.5) / 4;
-
-    return { protein, fat, carb };
 }
 
 // Обновление результатов
@@ -92,22 +78,11 @@ function updateResults() {
     document.getElementById('BMIresult').textContent = bmi.toFixed(2);
     document.getElementById('BMIcategory').textContent = bmiCategory;
 
-    const macros = calculateMacros(targetCalories);
     document.getElementById('protein').textContent = 'Белки: ' + macros.protein.toFixed(2) + ' г';
     document.getElementById('fat').textContent = 'Жиры: ' + macros.fat.toFixed(2) + ' г';
     document.getElementById('carb').textContent = 'Углеводы: ' + macros.carb.toFixed(2) + ' г';
-
-    // Рассчитать калории из макросов
-    const caloriesFromMacros = (macros.protein * 4) + (macros.fat * 9) + (macros.carb * 4);
-
-    // Рассчитать оставшиеся калории, не учтенные макросами
-    const caloriesWithoutMacros = targetCalories - caloriesFromMacros;
-
-    // Если разница незначительна (в пределах 1 калории), устанавливаем ее на 0
-    const roundedCaloriesWithoutMacros = Math.abs(caloriesWithoutMacros) < 1 ? 0 : caloriesWithoutMacros;
-
-    document.getElementById('caloriesWithoutMacros').textContent = 'Калории: ' + roundedCaloriesWithoutMacros.toFixed(2) + ' ккал';
 }
+
 
 // Обработчики событий для кнопок выбора пола
 document.getElementById('maleBtn').addEventListener('click', () => selectGender('male'));
