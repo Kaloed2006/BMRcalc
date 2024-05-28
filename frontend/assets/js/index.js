@@ -1,114 +1,188 @@
+// ===== РАСЧЁТЫ =====
 calculate();
-
-// Функции для активации кнопок целей
-function activateBtn(btnId) {
-    const buttons = ['loseWeightBtn', 'gainWeightBtn', 'maintainWeightBtn'];
-    buttons.forEach(id => document.getElementById(id).classList.toggle('active', id === btnId));
-}
-
-// Вызов функции для активации кнопки цели по умолчанию
+// Добавляем функцию для активации кнопки "Сбросить вес" по умолчанию при загрузке страницы
 function activateLoseWeightBtn() {
-    activateBtn('loseWeightBtn');
+    document.getElementById('loseWeightBtn').classList.add('active');
+    document.getElementById('gainWeightBtn').classList.remove('active');
+    document.getElementById('maintainWeightBtn').classList.remove('active');
+    calculate();
 }
 
-// Добавление обработчиков событий для кнопок целей
-['loseWeightBtn', 'gainWeightBtn', 'maintainWeightBtn'].forEach(btnId => {
-    document.getElementById(btnId).addEventListener('click', () => activateBtn(btnId));
+// Добавляем функцию для активации кнопки "Набрать вес" при загрузке страницы
+function activateGainWeightBtn() {
+    document.getElementById('loseWeightBtn').classList.remove('active');
+    document.getElementById('gainWeightBtn').classList.add('active');
+    document.getElementById('maintainWeightBtn').classList.remove('active');
+    calculate();
+}
+
+// Добавляем функцию для активации кнопки "Удержать вес" при загрузке страницы
+function activateMaintainWeightBtn() {
+    document.getElementById('loseWeightBtn').classList.remove('active');
+    document.getElementById('gainWeightBtn').classList.remove('active');
+    document.getElementById('maintainWeightBtn').classList.add('active');
+    calculate();
+}
+
+// Вызываем функции для активации кнопок по умолчанию
+activateLoseWeightBtn(); // По умолчанию активна кнопка "Сбросить вес"
+
+// Добавляем события для кнопок выбора цели
+document.getElementById('loseWeightBtn').addEventListener('click', function () {
+    activateLoseWeightBtn();
 });
 
-// Функция для расчета BMR
+document.getElementById('gainWeightBtn').addEventListener('click', function () {
+    activateGainWeightBtn();
+});
+
+document.getElementById('maintainWeightBtn').addEventListener('click', function () {
+    activateMaintainWeightBtn();
+});
+
 function calculateBMR(gender) {
     const weight = parseFloat(document.getElementById('weight').value);
     const height = parseFloat(document.getElementById('height').value);
     const age = parseFloat(document.getElementById('age').value);
-    const activity = parseFloat(document.getElementById('activity').value);
+    const selectedActivity = parseFloat(document.getElementById('activity').value);
     const fatPercentage = parseFloat(document.getElementById('fatPercentage').value);
 
-    const bmr = gender === 'male'
-        ? (10 * weight) + (6.25 * height) - (5 * age) + 5
-        : (10 * weight) + (6.25 * height) - (5 * age) - 161;
+    let bmr;
+    if (gender === 'male') {
+        bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+    } else {
+        bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+    }
 
-    const calories = Math.round(bmr * activity * (1 - fatPercentage / 100));
+    const calories = Math.round(bmr * selectedActivity * (1 - fatPercentage / 100));
+    const kilojoules = Math.round(calories * 4.184);
+
     sessionStorage.setItem('calories', calories);
-    sessionStorage.setItem('kilojoules', Math.round(calories * 4.184));
+    sessionStorage.setItem('kilojoules', kilojoules);
+
     sessionStorage.setItem('weight', weight);
     sessionStorage.setItem('height', height);
 }
 
-// Функция для выбора пола
 function selectGender(gender) {
     document.getElementById('maleBtn').classList.toggle('active', gender === 'male');
     document.getElementById('femaleBtn').classList.toggle('active', gender === 'female');
 }
 
-// Основная функция для расчетов
+document.getElementById('weight').addEventListener('input', calculate);
+document.getElementById('height').addEventListener('input', calculate);
+document.getElementById('age').addEventListener('input', calculate);
+document.getElementById('activity').addEventListener('input', calculate);
+document.getElementById('fatPercentage').addEventListener('input', calculate);
+
 function calculate() {
-    const gender = document.getElementById('maleBtn').classList.contains('active') ? 'male' : 'female';
+    let gender;
+
+    if (document.getElementById('maleBtn').classList.contains('active')) {
+        gender = 'male';
+    } else if (document.getElementById('femaleBtn').classList.contains('active')) {
+        gender = 'female';
+    }
+
     calculateBMR(gender);
-    calculateWHR(); // Предполагаем, что эта функция существует и работает корректно
+    calculateWHR();
 
     const calories = parseFloat(sessionStorage.getItem('calories'));
-    let targetCalories;
 
+    let targetCalories;
     if (document.getElementById('loseWeightBtn').classList.contains('active')) {
         targetCalories = Math.round(calories - 655);
     } else if (document.getElementById('gainWeightBtn').classList.contains('active')) {
         targetCalories = Math.round(calories + 373);
-    } else {
+    } else if (document.getElementById('maintainWeightBtn').classList.contains('active')) {
         targetCalories = Math.round(calories + 112);
     }
 
+    sessionStorage.setItem('goal', targetCalories > calories ? 'gainWeight' : targetCalories < calories ? 'loseWeight' : 'maintainWeight');
     sessionStorage.setItem('targetCalories', targetCalories);
+
+    // Вызываем функцию для обновления результатов
     updateResults();
 }
 
-// Обновление результатов
+// Добавляем функцию для обновления результатов на странице
 function updateResults() {
-    const targetCalories = parseFloat(sessionStorage.getItem('targetCalories'));
+    const targetCaloriesElement = document.getElementById('targetCalories');
+    const kilojoulesElement = document.getElementById('kilojoules');
+    const waterIntakeElement = document.getElementById('waterIntake');
+    const bmiResultElement = document.getElementById('BMIresult');
+    const bmiCategoryElement = document.getElementById('BMIcategory');
+
+    const targetCalories = sessionStorage.getItem('targetCalories');
+    const kilojoules = sessionStorage.getItem('kilojoules');
+
+    targetCaloriesElement.textContent = targetCalories;
+    kilojoulesElement.textContent = kilojoules;
+
     const weight = parseFloat(sessionStorage.getItem('weight'));
+
+    // Вычисляем норму потребления воды
+    const waterIntake = 27 * weight;
+    waterIntakeElement.textContent = waterIntake + "мл";
+
     const height = parseFloat(sessionStorage.getItem('height'));
 
-    document.getElementById('targetCalories').textContent = targetCalories;
-    document.getElementById('kilojoules').textContent = sessionStorage.getItem('kilojoules');
-    document.getElementById('waterIntake').textContent = (27 * weight).toFixed(2) + " мл";
+    const bmi = weight / Math.pow((height / 100), 2);
+    let bmiCategory;
 
-    const bmi = weight / Math.pow(height / 100, 2);
-    const bmiCategory = bmi < 18.5 ? 'Недостаточный вес' : bmi < 25 ? 'Нормальный вес' : bmi < 30 ? 'Избыточный вес' : 'Ожирение';
+    if (bmi < 18.5) {
+        bmiCategory = 'Недостаточный вес';
+    } else if (bmi >= 18.5 && bmi < 25) {
+        bmiCategory = 'Нормальный вес';
+    } else if (bmi >= 25 && bmi < 30) {
+        bmiCategory = 'Избыточный вес';
+    } else {
+        bmiCategory = 'Ожирение';
+    }
 
-    document.getElementById('BMIresult').textContent = bmi.toFixed(2);
-    document.getElementById('BMIcategory').textContent = bmiCategory;
-
-    document.getElementById('protein').textContent = 'Белки: ' + macros.protein.toFixed(2) + ' г';
-    document.getElementById('fat').textContent = 'Жиры: ' + macros.fat.toFixed(2) + ' г';
-    document.getElementById('carb').textContent = 'Углеводы: ' + macros.carb.toFixed(2) + ' г';
+    bmiResultElement.innerHTML = bmi.toFixed(2);
+    bmiCategoryElement.innerHTML = bmiCategory;
 }
 
-
-// Обработчики событий для кнопок выбора пола
-document.getElementById('maleBtn').addEventListener('click', () => selectGender('male'));
-document.getElementById('femaleBtn').addEventListener('click', () => selectGender('female'));
-
-// Обработчик события для кнопки расчета
-document.getElementById('calculateBtn').addEventListener('click', calculate);
-
-// Активировать кнопку по умолчанию
-activateLoseWeightBtn();
-
-
-
-// Расчет WHR
 function calculateWHR() {
     const waist = parseFloat(document.getElementById('waist').value);
     const hip = parseFloat(document.getElementById('hip').value);
-    const whr = waist / hip;
-    const whrCategory = whr < 0.9 ? 'Нормальное' : whr < 0.95 ? 'Граничное' : 'Повышенное';
 
-    document.getElementById('WHRresult').textContent = whr.toFixed(2);
-    document.getElementById('WHRcategory').textContent = whrCategory;
+    const whr = waist / hip;
+    let whrCategory;
+
+    if (whr < 0.9) {
+        whrCategory = 'Нормальное';
+    } else if (whr >= 0.9 && whr < 0.95) {
+        whrCategory = 'Граничное';
+    } else {
+        whrCategory = 'Повышенное';
+    }
+
+    document.getElementById('WHRresult').innerHTML = whr.toFixed(2);
+    document.getElementById('WHRcategory').innerHTML = whrCategory;
 }
 
-// События для изменения значений полей ввода "Талия" и "Бедра"
-['waist', 'hip'].forEach(id => document.getElementById(id).addEventListener('input', calculateWHR));
+// Добавляем события для кнопок выбора пола
+document.getElementById('maleBtn').addEventListener('click', function () {
+    selectGender('male');
+    calculate(); // Вызываем calculate() при изменении пола
+});
+
+document.getElementById('femaleBtn').addEventListener('click', function () {
+    selectGender('female');
+    calculate(); // Вызываем calculate() при изменении пола
+});
+
+// Добавляем события для изменения значений полей ввода "Талия" и "Бедра"
+document.getElementById('waist').addEventListener('input', function () {
+    calculateWHR();
+});
+
+document.getElementById('hip').addEventListener('input', function () {
+    calculateWHR();
+});
+// ===== РАСЧЁТЫ =====
 
 
 
@@ -139,11 +213,13 @@ function syncInputWithSlider(inputId, sliderId) {
     input.addEventListener('input', function () {
         // При изменении значения ползунка, обновляем значение input number
         slider.value = input.value;
+        calculate();
     });
     // Обработчик события input для input number
     slider.addEventListener('input', function () {
         // При изменении значения input number, обновляем значение ползунка
         input.value = slider.value;
+        calculate();
     });
 }
 
