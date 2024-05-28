@@ -234,10 +234,14 @@ function syncInputWithSlider(inputId, sliderId) {
 
     input.addEventListener('input', function () {
         slider.value = input.value;
+        calculate();
+        calculate2();
     });
 
     slider.addEventListener('input', function () {
         input.value = slider.value;
+        calculate();
+        calculate2();
     });
 }
 
@@ -318,11 +322,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function calculateBMI() {
-        const startHeight = parseFloat(document.getElementById('startHeight').value) / 100;
-        const startWeight = parseFloat(document.getElementById('startWeight').value);
+        const startHeight = parseFloat(document.getElementById('startHeightSlider').value) / 100;
+        const startWeight = parseFloat(document.getElementById('startWeightSlider').value);
 
-        const endHeight = parseFloat(document.getElementById('endHeight2').value) / 100;
-        const endWeight = parseFloat(document.getElementById('endWeight2').value);
+        const endHeight = parseFloat(document.getElementById('endHeightSlider2').value) / 100;
+        const endWeight = parseFloat(document.getElementById('endWeightSlider2').value);
 
         if (isNaN(startHeight) || isNaN(startWeight)) {
             document.getElementById('BMIresult').innerHTML = "Введите данные";
@@ -369,6 +373,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     calculateBMI();
+    document.getElementById('startHeightSlider').addEventListener('input', calculateBMI);
+    document.getElementById('startWeightSlider').addEventListener('input', calculateBMI);
+    document.getElementById('endHeightSlider2').addEventListener('input', calculateBMI);
+    document.getElementById('endWeightSlider2').addEventListener('input', calculateBMI);
+
     document.getElementById('startHeight').addEventListener('input', calculateBMI);
     document.getElementById('startWeight').addEventListener('input', calculateBMI);
     document.getElementById('endHeight2').addEventListener('input', calculateBMI);
@@ -432,11 +441,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function calculateWHR() {
-        const startWaist = parseFloat(document.getElementById('startWaist').value);
-        const startHip = parseFloat(document.getElementById('startHip').value);
+        const startWaist = parseFloat(document.getElementById('startWaistSlider').value);
+        const startHip = parseFloat(document.getElementById('startHipSlider').value);
 
-        const endWaist = parseFloat(document.getElementById('endWaist2').value);
-        const endHip = parseFloat(document.getElementById('endHip2').value);
+        const endWaist = parseFloat(document.getElementById('endWaistSlider2').value);
+        const endHip = parseFloat(document.getElementById('endHipSlider2').value);
 
         if (isNaN(startWaist) || isNaN(startHip)) {
             document.getElementById('WHRresult').innerHTML = "Введите данные";
@@ -482,6 +491,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     calculateWHR();
+    document.getElementById('startWaistSlider').addEventListener('input', calculateWHR);
+    document.getElementById('startHipSlider').addEventListener('input', calculateWHR);
+    document.getElementById('endWaistSlider2').addEventListener('input', calculateWHR);
+    document.getElementById('endHipSlider2').addEventListener('input', calculateWHR);
+
     document.getElementById('startWaist').addEventListener('input', calculateWHR);
     document.getElementById('startHip').addEventListener('input', calculateWHR);
     document.getElementById('endWaist2').addEventListener('input', calculateWHR);
@@ -528,8 +542,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function waterIntake() {
-        let startWeight = parseFloat(document.getElementById("startWeight").value);
-        let endWeight = parseFloat(document.getElementById("endWeight2").value);
+        let startWeight = parseFloat(document.getElementById("startWeightSlider").value);
+        let endWeight = parseFloat(document.getElementById("endWeightSlider2").value);
 
         if (isNaN(startWeight) || isNaN(endWeight)) {
             document.getElementById("oldResult").innerHTML = "";
@@ -547,6 +561,9 @@ document.addEventListener('DOMContentLoaded', () => {
         waterChart.update();
     }
 
+    document.getElementById("startWeightSlider").addEventListener("input", waterIntake);
+    document.getElementById("endWeightSlider2").addEventListener("input", waterIntake);
+    
     document.getElementById("startWeight").addEventListener("input", waterIntake);
     document.getElementById("endWeight2").addEventListener("input", waterIntake);
 

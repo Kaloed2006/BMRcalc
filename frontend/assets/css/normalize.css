@@ -15,4 +15,7 @@
 body {
     position: relative;
     background-color: var(--primary-color)!important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(../images/background_image.png);
 }
