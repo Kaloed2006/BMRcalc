@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang='en'>
+
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <link rel='stylesheet' href='../assets/css/index.css' />
     <title>БЖУ Калькулятор</title>
 </head>
+
 <body>
     <header class="header">
         <div class="header__content container">
@@ -145,6 +147,25 @@
             </div>
             <div class="block">
                 <div class="block__name">
+                    <h5>БЖУ</h5>
+                    <div class="hoverable">
+                        <p>Расшифровка</p>
+                        <span class="hidden-text">
+                            БЖУ — это обозначение соотношения белков, жиров и углеводов в рационе питания. Обычно это
+                            используется для составления диет и планов питания, чтобы обеспечить баланс необходимых
+                            макронутриентов для здоровья и достижения различных целей, таких как похудение, набор
+                            мышечной массы или поддержание веса.
+                        </span>
+                    </div>
+                </div>
+                <div class="block__info">
+                    <h3 id="proteinResult"></h3>
+                    <h3 id="fatResult"></h3>
+                    <h3 id="carbResult"></h3>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block__name">
                     <h5>BMI индекс</h5>
                     <div class="hoverable">
                         <p>Расшифровка</p>
@@ -204,4 +225,5 @@
     </main>
     <script src="../assets/js/index.js"></script>
 </body>
+
 </html>

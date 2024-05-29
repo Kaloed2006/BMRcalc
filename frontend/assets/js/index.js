@@ -75,6 +75,24 @@ document.getElementById('age').addEventListener('input', calculate);
 document.getElementById('activity').addEventListener('input', calculate);
 document.getElementById('fatPercentage').addEventListener('input', calculate);
 
+// Функция для расчета БЖУ
+function calculateMacros(calories) {
+    // Соотношение макронутриентов: 30% белков, 25% жиров и 45% углеводов
+    const proteinCalories = calories * 0.3;
+    const fatCalories = calories * 0.25;
+    const carbCalories = calories * 0.45;
+
+    // Калорийность макронутриентов: 1 г белков = 4 ккал, 1 г жиров = 9 ккал, 1 г углеводов = 4 ккал
+    const proteinGrams = Math.round(proteinCalories / 4);
+    const fatGrams = Math.round(fatCalories / 9);
+    const carbGrams = Math.round(carbCalories / 4);
+
+    // Сохраняем результаты в sessionStorage
+    sessionStorage.setItem('proteinGrams', proteinGrams);
+    sessionStorage.setItem('fatGrams', fatGrams);
+    sessionStorage.setItem('carbGrams', carbGrams);
+}
+
 function calculate() {
     let gender;
 
@@ -101,6 +119,9 @@ function calculate() {
     sessionStorage.setItem('goal', targetCalories > calories ? 'gainWeight' : targetCalories < calories ? 'loseWeight' : 'maintainWeight');
     sessionStorage.setItem('targetCalories', targetCalories);
 
+    // Вызываем функцию для расчета БЖУ
+    calculateMacros(targetCalories);
+
     // Вызываем функцию для обновления результатов
     updateResults();
 }
@@ -112,6 +133,9 @@ function updateResults() {
     const waterIntakeElement = document.getElementById('waterIntake');
     const bmiResultElement = document.getElementById('BMIresult');
     const bmiCategoryElement = document.getElementById('BMIcategory');
+    const proteinResultElement = document.getElementById('proteinResult');
+    const fatResultElement = document.getElementById('fatResult');
+    const carbResultElement = document.getElementById('carbResult');
 
     const targetCalories = sessionStorage.getItem('targetCalories');
     const kilojoules = sessionStorage.getItem('kilojoules');
@@ -142,6 +166,15 @@ function updateResults() {
 
     bmiResultElement.innerHTML = bmi.toFixed(2);
     bmiCategoryElement.innerHTML = bmiCategory;
+
+    // Обновляем результаты БЖУ
+    const proteinGrams = sessionStorage.getItem('proteinGrams');
+    const fatGrams = sessionStorage.getItem('fatGrams');
+    const carbGrams = sessionStorage.getItem('carbGrams');
+
+    proteinResultElement.textContent = `Белки: ${proteinGrams} г`;
+    fatResultElement.textContent = `Жиры: ${fatGrams} г`;
+    carbResultElement.textContent = `Углеводы: ${carbGrams} г`;
 }
 
 function calculateWHR() {
