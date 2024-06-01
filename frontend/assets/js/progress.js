@@ -48,7 +48,7 @@ function calculateBMR(gender) {
         bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
     }
 
-    const calories = Math.round(bmr * selectedActivity * (1 - fatPercentage / 100));
+    const calories = Math.round(bmr * selectedActivity + (fatPercentage * height / weight));
     const kilojoules = Math.round(calories * 4.184);
 
     sessionStorage.setItem('calories', calories);
@@ -94,11 +94,11 @@ function calculate() {
 
     let targetCalories;
     if (document.getElementById('loseWeightBtn').classList.contains('active')) {
-        targetCalories = Math.round(calories - 655);
+        targetCalories = Math.round(calories - 500);
     } else if (document.getElementById('gainWeightBtn').classList.contains('active')) {
-        targetCalories = Math.round(calories + 373);
+        targetCalories = Math.round(calories + 500);
     } else if (document.getElementById('maintainWeightBtn').classList.contains('active')) {
-        targetCalories = Math.round(calories + 112);
+        targetCalories = Math.round(calories + 100);
     }
 
     sessionStorage.setItem('goal', targetCalories > calories ? 'gainWeight' : targetCalories < calories ? 'loseWeight' : 'maintainWeight');
@@ -162,7 +162,7 @@ function calculateBMR2(gender) {
         bmr2 = (10 * weight2) + (6.25 * height2) - (5 * age2) - 161;
     }
 
-    const calories2 = Math.round(bmr2 * selectedActivity2 * (1 - fatPercentage2 / 100));
+    const calories2 = Math.round(bmr2 * selectedActivity2 + (fatPercentage2 * height2 / weight2));
     const kilojoules2 = Math.round(calories2 * 4.184);
 
     sessionStorage.setItem('calories2', calories2);
@@ -208,11 +208,11 @@ function calculate2() {
 
     let targetCalories2;
     if (document.getElementById('loseWeightBtn2').classList.contains('active')) {
-        targetCalories2 = Math.round(calories2 - 655);
+        targetCalories2 = Math.round(calories2 - 500);
     } else if (document.getElementById('gainWeightBtn2').classList.contains('active')) {
-        targetCalories2 = Math.round(calories2 + 373);
+        targetCalories2 = Math.round(calories2 + 500);
     } else if (document.getElementById('maintainWeightBtn2').classList.contains('active')) {
-        targetCalories2 = Math.round(calories2 + 112);
+        targetCalories2 = Math.round(calories2 + 100);
     }
 
     sessionStorage.setItem('goal2', targetCalories2 > calories2 ? 'gainWeight' : targetCalories2 < calories2 ? 'loseWeight' : 'maintainWeight');

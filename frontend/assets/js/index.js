@@ -54,7 +54,7 @@ function calculateBMR(gender) {
         bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
     }
 
-    const calories = Math.round(bmr * selectedActivity * (1 - fatPercentage / 100));
+    const calories = Math.round(bmr * selectedActivity + (fatPercentage * height / weight));
     const kilojoules = Math.round(calories * 4.184);
 
     sessionStorage.setItem('calories', calories);
@@ -109,11 +109,11 @@ function calculate() {
 
     let targetCalories;
     if (document.getElementById('loseWeightBtn').classList.contains('active')) {
-        targetCalories = Math.round(calories - 655);
+        targetCalories = Math.round(calories - 500);
     } else if (document.getElementById('gainWeightBtn').classList.contains('active')) {
-        targetCalories = Math.round(calories + 373);
+        targetCalories = Math.round(calories + 500);
     } else if (document.getElementById('maintainWeightBtn').classList.contains('active')) {
-        targetCalories = Math.round(calories + 112);
+        targetCalories = Math.round(calories + 100);
     }
 
     sessionStorage.setItem('goal', targetCalories > calories ? 'gainWeight' : targetCalories < calories ? 'loseWeight' : 'maintainWeight');
